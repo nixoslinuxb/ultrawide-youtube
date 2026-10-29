@@ -2,241 +2,237 @@
 
 [![CI](https://github.com/nixoslinuxb/ultrawide-youtube/actions/workflows/ci.yml/badge.svg)](https://github.com/nixoslinuxb/ultrawide-youtube/actions/workflows/ci.yml)
 
-YouTube'daki **16:9** videoları **3440×1440** (veya 21:9) ekrana oturtan bir Firefox eklentisi.
-Videoların sağında/solunda oluşan siyah bantları kaldırır; görüntüden **kırpma yapmaz**.
+A Firefox extension that fits **16:9** YouTube videos to a **3440×1440** (or 21:9) display.
+It removes the black bars on the left and right of the video **without cropping the picture**.
 
-## Özellikler
+## Features
 
-- **Yan bantları kaldır** (varsayılan): Yalnızca yan siyah bant varsa videoyu yatay
-  esneterek boşluğu doldurur. Video zaten ekrana sığıyorsa **hiç dokunmaz**.
-- **Tam ekranda otomatik**: Video, ekranın tamamını kaplar.
-- **Üç görüntü modu**
-  - **Yan bantları kaldır**: Kırpma yok; gerekirse yatay esnetme. (varsayılan)
-  - **Kırp & doldur**: Oran korunur, taşan üst/alt kısımlar kırpılır.
-  - **Uzat**: Görüntü her koşulda çerçeveye esnetilir; oran bozulabilir.
-- **Hedef oran**: Ekran (otomatik), 21:9, **3440×1440 (2.39:1)**, 24:10, 32:9 veya 2.39:1.
-  ("Yan bantları kaldır" modunda hedef = alan/ekran; oran seçimi yok sayılır.)
-- **Sinema (theater) modu** desteği: Oynatıcı kutusu hedef orana kadar büyütülür.
-- **Yatay genişletme**: Daraltılmış (pillarbox) oynatıcı, sinema modunda tüm alan genişliğine açılır.
-- **Normal pencere** desteği (isteğe bağlı, varsayılan kapalı).
-- **Klavye kısayolu**: `Alt + Shift + U` ile aç/kapat.
-- Ayarlar anında uygulanır; sayfa yenilemeye gerek yoktur.
-- Shorts sayfalarında devre dışı kalır.
+- **Remove side bars** (default): only when black side bars actually exist, the video is
+  stretched horizontally to fill the gap. If the video already fits the screen, it does
+  **nothing at all**.
+- **Automatic in fullscreen**: the video covers the whole screen.
+- **Three display modes**
+  - **Remove side bars**: no cropping; horizontal stretch only when needed. (default)
+  - **Crop & fill**: keeps the aspect ratio, crops the overflowing top/bottom.
+  - **Stretch**: always stretches the picture to the frame; the aspect ratio may distort.
+- **Target ratio**: Screen (automatic), 21:9, **3440×1440 (2.39:1)**, 24:10, 32:9 or 2.39:1.
+  (In "Remove side bars" mode the target is the area/screen itself, so the ratio setting is ignored.)
+- **Theater mode** support: the player box is grown up to the target ratio.
+- **Horizontal expansion**: a narrow (pillarboxed) player is widened to the full area width in theater mode.
+- **Normal window** support (optional, off by default).
+- **Keyboard shortcut**: `Alt + Shift + U` to toggle on/off.
+- Settings apply instantly; no page reload needed.
+- Disabled on Shorts pages.
 
-## Kurulum (geçici / geliştirme)
+## Installation (temporary / development)
 
-1. Firefox'ta `about:debugging#/runtime/this-firefox` adresini açın.
-2. **Geçici Eklenti Yükle…** düğmesine tıklayın.
-3. Bu projedeki `manifest.json` dosyasını seçin.
-4. YouTube'da bir video açıp tam ekrana geçin (`F`). Yan siyah bantlar kaybolur.
+1. Open `about:debugging#/runtime/this-firefox` in Firefox.
+2. Click **Load Temporary Add-on…**.
+3. Select the `manifest.json` file in this project.
+4. Open a video on YouTube and go fullscreen (`F`). The black side bars disappear.
 
-> Geçici eklentiler Firefox kapanınca kaldırılır. Kalıcı kullanım için aşağıdaki
-> "Paketleme ve imzalama" adımına bakın.
+> Temporary add-ons are removed when Firefox closes. For permanent use, see
+> "Packaging and signing" below, or install the published AMO build.
 
-## Kullanım
+## Usage
 
-Araç çubuğundaki eklenti simgesine tıklayarak:
+Click the extension icon in the toolbar to:
 
-- Ultra geniş modu açıp kapatabilir,
-- görüntü modunu (yan bantları kaldır / kırp / uzat) seçebilir,
-- hedef oranı belirleyebilir,
-- sinema modu ve normal pencere davranışını ayarlayabilirsiniz.
+- turn ultrawide mode on or off,
+- choose the display mode (remove side bars / crop / stretch),
+- set the target ratio,
+- configure theater mode and normal-window behavior.
 
-**Nerede uygulanır?**
+**Where does it apply?**
 
-| Ortam | Varsayılan |
+| Context | Default |
 | --- | --- |
-| Tam ekran | Her zaman |
-| Sinema (theater) modu | Açık (kapatılabilir) |
-| Normal pencere | Kapalı (açılabilir) |
+| Fullscreen | Always |
+| Theater mode | On (can be disabled) |
+| Normal window | Off (can be enabled) |
 
-## Çevrimdışı çalışma
+## Offline behavior
 
-Eklentinin kendisi **tamamen çevrimdışıdır**: hiçbir ağ isteği yapmaz, harici sunucu,
-analitik veya telemetri kullanmaz. Tüm işlemler tarayıcı içinde, YouTube sayfasının
-DOM'u ve CSS'i üzerinde yapılır. Yani internet bağlantısı olmadan da eklenti mantığı
-çalışır.
+The extension itself is **fully offline**: it makes no network requests and uses no external
+server, analytics, or telemetry. Everything happens inside the browser, on the YouTube page's
+DOM and CSS. Its logic therefore works without an internet connection.
 
-Ancak video **oynatmak** için YouTube'un kendisi internete ihtiyaç duyar; çevrimdışıyken
-video akışı yüklenemez. Eklenti yalnızca görüntü kutusunun boyutunu değiştirdiği için
-çevrimdışı kullanımda da hiçbir şeyi engellemez veya bozmaz.
+Playing a video, however, requires YouTube itself to be online; the video stream cannot be
+loaded while offline. Since the extension only changes the size of the picture box, it never
+blocks or breaks anything when offline.
 
-## Paketleme ve imzalama
+## Packaging and signing
 
 ```sh
 sh build.sh
 ```
 
-`dist/ultrawide-youtube-1.4.0.xpi` üretilir.
+This produces `dist/ultrawide-youtube-1.4.0.xpi`.
 
-## addons.mozilla.org (AMO) üzerinde yayınlama
+## Publishing to addons.mozilla.org (AMO)
 
-Eklentinin AMO kimliği `ultrawide-youtube@nixoslinuxb.github.io`'dir.
+The add-on's AMO ID is `ultrawide-youtube@nixoslinuxb.github.io`.
 
-- Geliştirici paneli: https://addons.mozilla.org/developers/addon/ultrawide-youtube-3440x1440/
-- Sürüm 1.4.0 gönderildi ve **Mozilla incelemesi bekliyor** (`nominated`). Onaylandıktan sonra
-  eklenti AMO'da herkese açık olarak listelenir.
+- Developer hub: https://addons.mozilla.org/developers/addon/ultrawide-youtube-3440x1440/
+- Version 1.4.0 has been submitted and is **awaiting Mozilla review** (`nominated`). Once
+  approved, the add-on is publicly listed on AMO.
 
-### 1. API anahtarlarını al
+### 1. Get API credentials
 
-[AMO Geliştirici API anahtarları](https://addons.mozilla.org/developers/addon/api/key/)
-sayfasında **JWT issuer** (API key) ve **JWT secret** (API secret) üret.
+On the [AMO developer API keys](https://addons.mozilla.org/developers/addon/api/key/) page,
+generate a **JWT issuer** (API key) and a **JWT secret** (API secret).
 
-### 2. GitHub deposuna ekle
+### 2. Add them to the GitHub repository
 
-Depo → **Settings → Secrets and variables → Actions** bölümünde iki sır tanımla:
+Repository → **Settings → Secrets and variables → Actions** and define two secrets:
 
-| Ad | Değer |
+| Name | Value |
 | --- | --- |
 | `AMO_JWT_ISSUER` | API key (JWT issuer) |
 | `AMO_JWT_SECRET` | API secret (JWT secret) |
 
-### 3. Gönder
+### 3. Submit
 
-GitHub → **Actions → Publish to AMO → Run workflow** seçip kanalı belirle:
+GitHub → **Actions → Publish to AMO → Run workflow** and pick the channel:
 
-- **listed** (varsayılan): Eklenti addons.mozilla.org'da **herkese açık** listelenir; Mozilla
-  incelemesinden sonra yayınlanır. İnceleme beklemeden gönderilir (`--approval-timeout 0`).
-- **unlisted**: Yalnızca kendinden dağıtım için imzalanır; AMO'da herkese açık listelenmez.
+- **listed** (default): the add-on is **publicly listed** on addons.mozilla.org and published
+  after Mozilla's review. It is submitted without waiting for the review (`--approval-timeout 0`).
+- **unlisted**: signed only for self-distribution; not publicly listed on AMO.
 
-Her yeni sürümde önce `manifest.json` içindeki `version` değerini artır (AMO aynı sürümü
-ikinci kez kabul etmez). Bir GitHub sürümü (`release: published`) yayınlandığında da iş
-akışı otomatik çalışır.
+For every new release, bump `version` in `manifest.json` first (AMO rejects duplicate versions).
+The workflow also runs automatically when a GitHub release is published (`release: published`).
 
-Yerelde imzalamak için:
+To sign locally:
 
 ```sh
 npm run sign
-# veya
+# or
 npx web-ext sign --config web-ext-config.cjs --channel unlisted \
   --api-key=... --api-secret=...
 ```
 
-> Listeleme metni, ekran görüntüleri ve gizlilik politikası AMO geliştirici panelinden
-> düzenlenir; API yalnızca sürümü gönderir.
+> Listing text, screenshots, and the privacy policy are edited in the AMO developer hub;
+> the API only submits the version.
 
-Geliştirme sırasında canlı test:
+Live testing during development:
 
 ```sh
 npx web-ext run
 ```
 
-## Nasıl çalışır?
+## How it works
 
-YouTube oynatıcısı (`#movie_player`) video elementinin boyutunu sürekli kendi
-hesaplar. Eklenti:
+The YouTube player (`#movie_player`) continuously computes the size of the video element.
+The extension:
 
-1. Hedef orana göre bir **çerçeve** hesaplar (tam ekranda ekran, sinema/normal
-   modda oyuncu alanı, gerekirse oyuncuyu büyüterek).
-2. Çerçeve boyutlarını CSS değişkenleri olarak `<style>` içine yazar.
-3. Video elementini ve doğrudan kabını `data-uw-video` / `data-uw-container`
-   ile etiketleyip `!important` kurallarla bu boyutları ve
-   `object-fit: cover` (kırp), `fill` (esnet) uygular.
-4. Sinema/normal modda genişletme için oynatıcıdan yukarı doğru yürüyerek
-   sarmalayıcıları `data-uw-frame` ile etiketler; hem yükseklik (`--uw-player-h`)
-   hem de genişlik (`--uw-player-w`) hedefe sabitlenir.
+1. Computes a **frame** from the target ratio (the screen in fullscreen, the player area in
+   theater/normal mode, growing the player if necessary).
+2. Writes the frame dimensions as CSS variables into a `<style>` element.
+3. Tags the video element and its direct container with `data-uw-video` / `data-uw-container`
+   and applies those dimensions with `!important` rules, plus
+   `object-fit: cover` (crop) or `fill` (stretch).
+4. In theater/normal mode it walks upward from the player and tags wrappers with
+   `data-uw-frame`; both height (`--uw-player-h`) and width (`--uw-player-w`) are pinned to
+   the target.
 
-`object-fit: cover` sayesinde 16:9 görüntü hedef çerçeveyi **oranı bozulmadan**
-doldurur; alt/üstten kırpılır. `fill` ise esnetir.
+`object-fit: cover` makes a 16:9 picture fill the target frame **without distorting** it,
+cropping from the top/bottom. `fill` stretches instead.
 
-### "Yan bantları kaldır" nasıl karar verir?
+### How "Remove side bars" decides
 
-Eklenti videonun gerçek oranını (`videoWidth / videoHeight`) oynatıcının kapladığı
-alanın oranıyla karşılaştırır:
+The extension compares the video's real ratio (`videoWidth / videoHeight`) with the ratio of
+the area the player occupies:
 
-- Video **manzara** değilse (`< 1.5`) veya alan videodan **daha geniş değilse**
-  (yan bant yok, video zaten oturuyor) → **hiçbir şey yapılmaz**.
-- Alan videodan belirgin şekilde daha genişse (yan siyah bant oluşuyorsa) → çerçeve
-  alanın tamamı yapılır ve görüntü `object-fit: fill` ile yatay esnetilir.
+- If the video is not **landscape** (`< 1.5`), or the area is **not wider** than the video
+  (no side bars; the video already fits) → **nothing is done**.
+- If the area is clearly wider than the video (black side bars exist) → the frame becomes the
+  whole area and the picture is stretched horizontally with `object-fit: fill`.
 
-Bu modda kırpma **yoktur**; boşluğu doldurmanın matematiksel karşılığı yatay
-esnetmedir (16:9 → ~2.39:1 için genişlik ~%34 artar). Oranı bozmak istemiyorsanız
-"Kırp & doldur" modunu seçin.
+There is **no cropping** in this mode; the mathematical equivalent of filling the gap is a
+horizontal stretch (for 16:9 → ~2.39:1 the width grows by ~34%). If you want to keep the
+aspect ratio, choose "Crop & fill".
 
-### Yeni DOM uyumluluğu
+### New DOM compatibility
 
-YouTube oynatıcı DOM'u (sarmalayıcı isimleri, sınıflar, `padding-top` /
-`aspect-ratio` hileleri) sık değişir. Eklenti bu yüzden **sabit seçicilere**
-(`#player-container`, `ytd-player` vb.) güvenmez:
+The YouTube player DOM (wrapper names, classes, `padding-top` / `aspect-ratio` tricks) changes
+often. The extension therefore does **not** rely on fixed selectors
+(`#player-container`, `ytd-player`, etc.):
 
-- Oynatıcıdan yukarı doğru **dinamik** yürüyüş yapılır; yalnızca tek çocuklu
-  sarmalayıcılar hedef yüksekliğe sabitlenir (çok çocuklu, alt içerik barındıran
-  kaplara dokunulmaz).
-- Zincir büyüdüğü halde görüntü hâlâ kırpılıyorsa, alanı kısıtlayan bir üst ata
-  **geri beslemeyle** eklenir; birkaç karede yakınsar.
-- Etiketler her uygulamada tazelenir; YouTube bir sarmalayıcıyı değiştirirse
-  otomatik yeniden etiketlenir.
-- `ytd-watch-flexy` yanında `ytd-watch-grid` düzeni de tanınır; theater durumu
-  öznitelik (`[theater]`) üzerinden okunur.
-- Video elementi `html5-main-video` sınıfı yoksa bile genel `video` üzerinden
-  bulunur.
+- It walks **dynamically** upward from the player; only single-child wrappers are pinned to the
+  target height (containers with several children, which hold other content, are left alone).
+- If the picture is still cropped after the chain grows, an ancestor that constrains the area is
+  added via **feedback**; it converges within a few frames.
+- Tags are refreshed on every apply; if YouTube replaces a wrapper, it is re-tagged automatically.
+- Besides `ytd-watch-flexy`, the `ytd-watch-grid` layout is recognized; theater state is read
+  from the `[theater]` attribute.
+- The video element is found through a generic `video` lookup even if it lacks the
+  `html5-main-video` class.
 
-## Testler
+## Tests
 
-jsdom tabanlı birim/entegrasyon testleri vardır. Gerçek yerleşim motoru olmadığı
-jçin `getBoundingClientRect` basit bir modelle taklit edilir; böylece etiketleme,
-geri besleme ve temizleme mantığı sınanır.
+There are jsdom-based unit/integration tests. Since jsdom has no real layout engine,
+`getBoundingClientRect` is emulated with a small model so that tagging, feedback, and cleanup
+logic is actually exercised.
 
 ```sh
 npm install
 npm test
 ```
 
-Kapsam: ultra geniş sinema dolgusu, genişletme + geri besleme (kısıtlayan atanın
-etiketlenmesi), daraltılmış oynatıcının yatay genişletilmesi, tam ekran (3440×1440
-dahil), "yan bantları kaldır" (3440×1440'da 16:9 esnetme), video ekranla aynı orandayken
-veya daha genişken hiç dokunmama, Shorts'ta devre dışı, ayar kapalıyken uygulanmama ve
-sinema modundan çıkışta etiket temizliği.
+Coverage: ultrawide theater fill, expansion + feedback (tagging the constraining ancestor),
+horizontal expansion of a narrow player, fullscreen (including 3440×1440), "remove side bars"
+(16:9 stretch on 3440×1440), doing nothing when the video matches or exceeds the screen ratio,
+disabled on Shorts, no-op when the setting is off, and tag cleanup when leaving theater mode.
 
-## Dosya yapısı
+## Project structure
 
 ```
-manifest.json        Eklenti tanımı (Manifest V2, Firefox)
-src/background.js    Kısayol + rozet yönetimi
-src/content.js       Boyutlandırma mantığı (ana bileşen)
-popup/               Araç çubuğu arayüzü
-icons/icon.svg       Simge
-tests/               jsdom testleri
-build.sh             .xpi paketleyici
-web-ext-config.cjs   web-ext (AMO) yapılandırması
-.github/workflows/   CI, GitHub sürümü ve AMO gönderim otomasyonu
+manifest.json        Extension manifest (Manifest V2, Firefox)
+src/background.js    Shortcut + badge management
+src/content.js       Sizing logic (main component)
+popup/               Toolbar UI
+icons/icon.svg       Icon
+icons/icon-128.png   128×128 icon used for the AMO listing
+amo-metadata.json    AMO listing metadata (name, summary, categories, license)
+tests/               jsdom tests
+build.sh             .xpi packager
+web-ext-config.cjs   web-ext (AMO) configuration
+.github/workflows/   CI, GitHub release and AMO submission automation
 ```
 
-## Otomatik sürüm
+## Automated releases
 
-`v1.4.0` gibi bir etiket push edildiğinde GitHub Actions testleri çalıştırır, `.xpi`
-paketini üretir ve GitHub Releases'e yükler:
+Pushing a tag such as `v1.4.0` makes GitHub Actions run the tests, build the `.xpi` and upload
+it to GitHub Releases:
 
 ```sh
 git tag v1.4.0
 git push origin v1.4.0
 ```
 
-Her `main` push'unda ve pull request'te CI testleri + paketleme çalışır.
+CI tests and packaging run on every push to `main` and on pull requests.
 
-## Lisans
+## License
 
 [MIT](LICENSE) © 2026 nixoslinuxb
 
-## 3440×1440 monitörler için
+## For 3440×1440 monitors
 
-- **Tam ekranda** varsayılan "Yan bantları kaldır" modu, 16:9 videoyu 3440×1440 alanına
-  **kırpmadan** oturtur: yan bantlar gider, görüntü yatay esner. Ek ayar gerekmez.
-- Video zaten 3440×1440 (2.39:1) oranındaysa (sinematik içerik) hiçbir işlem yapılmaz.
-- Oranı korumak istiyorsanız "Kırp & doldur" seçin: 16:9 içerik 2.39:1 çerçeveye
-  kırpılarak oturur; üst/alttan ~%13'lük kısım görünmez.
-- Kalite (1080p/1440p/2160p) YouTube tarafından seçilir; eklenti yalnızca görüntü
-  kutusunu büyütür. Otomatik yükselmezse kalite menüsünden elle 1440p/2160p seç.
-- Kalite (1080p/1440p/2160p) YouTube tarafından seçilir; eklenti yalnızca görüntü
-  kutusunu büyütür. Otomatik yükselmezse kalite menüsünden elle 1440p/2160p seç.
+- **In fullscreen**, the default "Remove side bars" mode fits a 16:9 video into the 3440×1440
+  area **without cropping**: the side bars disappear and the picture stretches horizontally.
+  No extra configuration is needed.
+- If the video is already 3440×1440 (2.39:1) — cinematic content — nothing is changed.
+- To preserve the aspect ratio, choose "Crop & fill": 16:9 content is cropped into the 2.39:1
+  frame, hiding roughly 13% from the top/bottom.
+- Quality (1080p/1440p/2160p) is chosen by YouTube; the extension only enlarges the picture box.
+  If it does not upgrade automatically, pick 1440p/2160p manually from the quality menu.
 
-## Notlar ve sınırlamalar
+## Notes and limitations
 
-- Tüm boyutlandırma dinamik ata zinciriyle yapıldığı için YouTube arayüzü
-  değişse bile genişletme çalışmaya devam eder. Yine de tam ekran modu en
-  sağlam yoldur; sinema/normal modda oynatıcıyı büyütme deneyseldir ve sorun
-  olursa popup'tan kapatılabilir.
-- Altyazılar oyuncuya göre konumlandığı için tam ekran dışı letterbox durumunda
-  kenarlarda kalabilir.
-- "Yan bantları kaldır" modu oranı esnetir; 4:3 veya dikey videolarda devreye girmez
-  (yalnızca manzara ve alandan dar videolarda çalışır).
+- Because all sizing uses a dynamic ancestor chain, expansion keeps working even if the YouTube
+  UI changes. Fullscreen remains the most robust path; growing the player in theater/normal
+  mode is experimental and can be turned off from the popup.
+- Subtitles are positioned relative to the player, so they may stay at the edges in
+  non-fullscreen letterbox situations.
+- "Remove side bars" stretches the aspect ratio and does not engage for 4:3 or vertical videos
+  (it only works on landscape videos that are narrower than the area).
