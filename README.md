@@ -73,6 +73,10 @@ sh build.sh
 
 Eklentinin AMO kimliği `ultrawide-youtube@nixoslinuxb.github.io`'dir.
 
+- Geliştirici paneli: https://addons.mozilla.org/developers/addon/ultrawide-youtube-3440x1440/
+- Sürüm 1.4.0 gönderildi ve **Mozilla incelemesi bekliyor** (`nominated`). Onaylandıktan sonra
+  eklenti AMO'da herkese açık olarak listelenir.
+
 ### 1. API anahtarlarını al
 
 [AMO Geliştirici API anahtarları](https://addons.mozilla.org/developers/addon/api/key/)
