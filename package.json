@@ -1,0 +1,13 @@
+{
+  "name": "ultrawide-youtube",
+  "version": "1.3.0",
+  "private": true,
+  "description": "Firefox eklentisi: YouTube'daki 16:9 videoları 3440×1440 ekrana oturtur, yan siyah bantları kaldırır.",
+  "scripts": {
+    "test": "node tests/content.test.cjs",
+    "build": "sh build.sh"
+  },
+  "devDependencies": {
+    "jsdom": "^30.1.3"
+  }
+}

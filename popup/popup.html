@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>UltraWide YouTube</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <header class="head">
+      <img class="logo" src="../icons/icon.svg" alt="" />
+      <div class="titles">
+        <h1>UltraWide YouTube</h1>
+        <p class="sub">16:9 → 21:9 / ekran</p>
+      </div>
+      <label class="switch" title="Ultra geniş modu aç/kapat">
+        <input type="checkbox" id="enabled" aria-label="Ultra geniş modu" />
+        <span class="track"><span class="thumb"></span></span>
+      </label>
+    </header>
+
+    <main id="panel">
+      <section class="group">
+        <span class="label">Görüntü modu</span>
+        <div class="segmented" role="radiogroup" aria-label="Görüntü modu">
+          <button type="button" class="seg" data-mode="bars" role="radio">Yan bantları kaldır</button>
+          <button type="button" class="seg" data-mode="cover" role="radio">Kırp &amp; doldur</button>
+          <button type="button" class="seg" data-mode="fill" role="radio">Uzat</button>
+        </div>
+        <p class="hint" id="modeHint"></p>
+      </section>
+
+      <section class="group">
+        <label class="row" for="ratio">
+          <span class="label">Hedef oran</span>
+          <select id="ratio">
+            <option value="screen">Ekran (otomatik)</option>
+            <option value="21:9">21:9 — ultra geniş</option>
+            <option value="3440:1440">3440×1440 (2.39:1)</option>
+            <option value="24:10">24:10</option>
+            <option value="32:9">32:9 — süper ultra geniş</option>
+            <option value="2.39:1">2.39:1 — sinema</option>
+          </select>
+        </label>
+      </section>
+
+      <section class="group">
+        <label class="check">
+          <input type="checkbox" id="applyTheater" />
+          <span>Sinema (theater) modunda uygula</span>
+        </label>
+        <label class="check">
+          <input type="checkbox" id="applyWindow" />
+          <span>Normal pencerede de uygula</span>
+        </label>
+      </section>
+
+      <p class="status" id="status"></p>
+    </main>
+
+    <footer class="foot">
+      <span>Kısayol</span>
+      <kbd>Alt</kbd><kbd>Shift</kbd><kbd>U</kbd>
+      <span class="sep">·</span>
+      <span>Tam ekranda her zaman uygulanır</span>
+    </footer>
+
+    <script src="popup.js"></script>
+  </body>
+</html>

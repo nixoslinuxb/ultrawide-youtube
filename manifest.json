@@ -1,0 +1,46 @@
+{
+  "manifest_version": 2,
+  "name": "UltraWide YouTube — 16:9 → 3440×1440",
+  "short_name": "UltraWide YouTube",
+  "version": "1.3.0",
+  "description": "YouTube'daki 16:9 videoları 3440×1440 / 21:9 ekrana oturtur. Yan siyah bantları kırpmadan yok eder.",
+  "author": "UltraWide YouTube",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "ultrawide-youtube@local",
+      "strict_min_version": "109.0"
+    }
+  },
+  "permissions": ["storage", "activeTab"],
+  "icons": {
+    "48": "icons/icon.svg",
+    "96": "icons/icon.svg"
+  },
+  "browser_action": {
+    "default_title": "UltraWide YouTube",
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "48": "icons/icon.svg",
+      "96": "icons/icon.svg"
+    }
+  },
+  "background": {
+    "scripts": ["src/background.js"],
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.youtube.com/*", "*://*.youtube-nocookie.com/*"],
+      "js": ["src/content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "commands": {
+    "toggle-ultrawide": {
+      "suggested_key": {
+        "default": "Alt+Shift+U"
+      },
+      "description": "Ultra geniş modu aç/kapat"
+    }
+  }
+}
