@@ -67,14 +67,49 @@ video akışı yüklenemez. Eklenti yalnızca görüntü kutusunun boyutunu değ
 sh build.sh
 ```
 
-`dist/ultrawide-youtube-1.3.0.xpi` üretilir. Mozilla'da imzalatmak için:
+`dist/ultrawide-youtube-1.4.0.xpi` üretilir.
+
+## addons.mozilla.org (AMO) üzerinde yayınlama
+
+Eklentinin AMO kimliği `ultrawide-youtube@nixoslinuxb.github.io`'dir.
+
+### 1. API anahtarlarını al
+
+[AMO Geliştirici API anahtarları](https://addons.mozilla.org/developers/addon/api/key/)
+sayfasında **JWT issuer** (API key) ve **JWT secret** (API secret) üret.
+
+### 2. GitHub deposuna ekle
+
+Depo → **Settings → Secrets and variables → Actions** bölümünde iki sır tanımla:
+
+| Ad | Değer |
+| --- | --- |
+| `AMO_JWT_ISSUER` | API key (JWT issuer) |
+| `AMO_JWT_SECRET` | API secret (JWT secret) |
+
+### 3. Gönder
+
+GitHub → **Actions → Publish to AMO → Run workflow** seçip kanalı belirle:
+
+- **listed** (varsayılan): Eklenti addons.mozilla.org'da **herkese açık** listelenir; Mozilla
+  incelemesinden sonra yayınlanır. İnceleme beklemeden gönderilir (`--approval-timeout 0`).
+- **unlisted**: Yalnızca kendinden dağıtım için imzalanır; AMO'da herkese açık listelenmez.
+
+Her yeni sürümde önce `manifest.json` içindeki `version` değerini artır (AMO aynı sürümü
+ikinci kez kabul etmez). Bir GitHub sürümü (`release: published`) yayınlandığında da iş
+akışı otomatik çalışır.
+
+Yerelde imzalamak için:
 
 ```sh
-npx web-ext sign --api-key=... --api-secret=...
+npm run sign
+# veya
+npx web-ext sign --config web-ext-config.cjs --channel unlisted \
+  --api-key=... --api-secret=...
 ```
 
-ya da doğrudan [addons.mozilla.org](https://addons.mozilla.org/developers/) üzerinden
-`.xpi` dosyasını yükleyebilirsiniz.
+> Listeleme metni, ekran görüntüleri ve gizlilik politikası AMO geliştirici panelinden
+> düzenlenir; API yalnızca sürümü gönderir.
 
 Geliştirme sırasında canlı test:
 
@@ -159,17 +194,18 @@ popup/               Araç çubuğu arayüzü
 icons/icon.svg       Simge
 tests/               jsdom testleri
 build.sh             .xpi paketleyici
-.github/workflows/   CI ve sürüm otomasyonu
+web-ext-config.cjs   web-ext (AMO) yapılandırması
+.github/workflows/   CI, GitHub sürümü ve AMO gönderim otomasyonu
 ```
 
 ## Otomatik sürüm
 
-`v1.3.0` gibi bir etiket push edildiğinde GitHub Actions testleri çalıştırır, `.xpi`
+`v1.4.0` gibi bir etiket push edildiğinde GitHub Actions testleri çalıştırır, `.xpi`
 paketini üretir ve GitHub Releases'e yükler:
 
 ```sh
-git tag v1.3.0
-git push origin v1.3.0
+git tag v1.4.0
+git push origin v1.4.0
 ```
 
 Her `main` push'unda ve pull request'te CI testleri + paketleme çalışır.

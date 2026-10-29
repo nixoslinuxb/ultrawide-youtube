@@ -1,0 +1,57 @@
+name: Publish to AMO
+
+on:
+  workflow_dispatch:
+    inputs:
+      channel:
+        description: 'AMO kanalı: listed = addons.mozilla.org listelemesi, unlisted = yalnızca kendinden dağıtım'
+        type: choice
+        options:
+          - listed
+          - unlisted
+        default: listed
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+jobs:
+  amo:
+    runs-on: ubuntu-latest
+    env:
+      WEB_EXT_API_KEY: ${{ secrets.AMO_JWT_ISSUER }}
+      WEB_EXT_API_SECRET: ${{ secrets.AMO_JWT_SECRET }}
+      CHANNEL: ${{ github.event.inputs.channel || 'listed' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Bağımlılıkları kur
+        run: npm install --no-audit --no-fund
+
+      - name: Testleri çalıştır
+        run: npm test
+
+      - name: AMO kimlik bilgileri yok — atla
+        if: env.WEB_EXT_API_KEY == '' || env.WEB_EXT_API_SECRET == ''
+        run: echo "::notice::AMO_JWT_ISSUER / AMO_JWT_SECRET tanımlı değil. Depo sırlarını ekleyip iş akışını yeniden çalıştırın."
+
+      - name: AMO'ya gönder / imzala
+        if: env.WEB_EXT_API_KEY != '' && env.WEB_EXT_API_SECRET != ''
+        run: |
+          if [ "$CHANNEL" = "listed" ]; then
+            npx web-ext sign --config web-ext-config.cjs --channel listed --approval-timeout 0 --no-input
+          else
+            npx web-ext sign --config web-ext-config.cjs --channel unlisted --no-input
+          fi
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: amo-artifacts
+          path: dist/**/*.xpi
+          if-no-files-found: ignore
