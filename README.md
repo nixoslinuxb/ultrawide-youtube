@@ -1,5 +1,7 @@
 # UltraWide YouTube — 16:9 → 3440×1440
 
+[![CI](https://github.com/nixoslinuxb/ultrawide-youtube/actions/workflows/ci.yml/badge.svg)](https://github.com/nixoslinuxb/ultrawide-youtube/actions/workflows/ci.yml)
+
 YouTube'daki **16:9** videoları **3440×1440** (veya 21:9) ekrana oturtan bir Firefox eklentisi.
 Videoların sağında/solunda oluşan siyah bantları kaldırır; görüntüden **kırpma yapmaz**.
 
@@ -47,6 +49,17 @@ Araç çubuğundaki eklenti simgesine tıklayarak:
 | Tam ekran | Her zaman |
 | Sinema (theater) modu | Açık (kapatılabilir) |
 | Normal pencere | Kapalı (açılabilir) |
+
+## Çevrimdışı çalışma
+
+Eklentinin kendisi **tamamen çevrimdışıdır**: hiçbir ağ isteği yapmaz, harici sunucu,
+analitik veya telemetri kullanmaz. Tüm işlemler tarayıcı içinde, YouTube sayfasının
+DOM'u ve CSS'i üzerinde yapılır. Yani internet bağlantısı olmadan da eklenti mantığı
+çalışır.
+
+Ancak video **oynatmak** için YouTube'un kendisi internete ihtiyaç duyar; çevrimdışıyken
+video akışı yüklenemez. Eklenti yalnızca görüntü kutusunun boyutunu değiştirdiği için
+çevrimdışı kullanımda da hiçbir şeyi engellemez veya bozmaz.
 
 ## Paketleme ve imzalama
 
@@ -146,7 +159,24 @@ popup/               Araç çubuğu arayüzü
 icons/icon.svg       Simge
 tests/               jsdom testleri
 build.sh             .xpi paketleyici
+.github/workflows/   CI ve sürüm otomasyonu
 ```
+
+## Otomatik sürüm
+
+`v1.3.0` gibi bir etiket push edildiğinde GitHub Actions testleri çalıştırır, `.xpi`
+paketini üretir ve GitHub Releases'e yükler:
+
+```sh
+git tag v1.3.0
+git push origin v1.3.0
+```
+
+Her `main` push'unda ve pull request'te CI testleri + paketleme çalışır.
+
+## Lisans
+
+[MIT](LICENSE) © 2026 nixoslinuxb
 
 ## 3440×1440 monitörler için
 

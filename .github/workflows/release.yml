@@ -1,0 +1,32 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Bağımlılıkları kur
+        run: npm install --no-audit --no-fund
+
+      - name: Testleri çalıştır
+        run: npm test
+
+      - name: Paket oluştur
+        run: sh build.sh
+
+      - name: GitHub sürümü yayınla
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" dist/*.xpi --title "UltraWide YouTube $GITHUB_REF_NAME" --notes "UltraWide YouTube $GITHUB_REF_NAME — Firefox eklentisi. Kurulum: .xpi dosyasını indirin, Firefox'ta \`about:debugging#/runtime/this-firefox\` üzerinden yükleyin."

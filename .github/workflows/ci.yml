@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Bağımlılıkları kur
+        run: npm install --no-audit --no-fund
+
+      - name: Testleri çalıştır
+        run: npm test
+
+      - name: Paket oluştur
+        run: sh build.sh
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ultrawide-youtube-xpi
+          path: dist/*.xpi
+          if-no-files-found: error
