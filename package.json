@@ -6,7 +6,7 @@
   "scripts": {
     "test": "node tests/content.test.cjs",
     "build": "sh build.sh",
-    "sign": "web-ext sign --config web-ext-config.cjs --channel unlisted --no-input"
+    "sign": "web-ext sign --config web-ext-config.cjs --channel unlisted --amo-metadata amo-metadata.json --no-input"
   },
   "devDependencies": {
     "jsdom": "^30.1.3",

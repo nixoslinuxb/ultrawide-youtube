@@ -44,9 +44,9 @@ jobs:
         if: env.WEB_EXT_API_KEY != '' && env.WEB_EXT_API_SECRET != ''
         run: |
           if [ "$CHANNEL" = "listed" ]; then
-            npx web-ext sign --config web-ext-config.cjs --channel listed --approval-timeout 0 --no-input
+            npx web-ext sign --config web-ext-config.cjs --channel listed --amo-metadata amo-metadata.json --approval-timeout 0 --no-input
           else
-            npx web-ext sign --config web-ext-config.cjs --channel unlisted --no-input
+            npx web-ext sign --config web-ext-config.cjs --channel unlisted --amo-metadata amo-metadata.json --no-input
           fi
 
       - uses: actions/upload-artifact@v4

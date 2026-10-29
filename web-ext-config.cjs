@@ -19,5 +19,6 @@ module.exports = {
     'LICENSE',
     '.gitignore',
     'web-ext-config.cjs',
+    'amo-metadata.json',
   ],
 };

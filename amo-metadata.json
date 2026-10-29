@@ -1,0 +1,35 @@
+{
+  "name": {
+    "en-US": "UltraWide YouTube",
+    "tr": "UltraWide YouTube"
+  },
+  "summary": {
+    "en-US": "Fits 16:9 YouTube videos to 3440×1440 / 21:9 by removing the black side bars without cropping.",
+    "tr": "16:9 YouTube videolarını kırpmadan yan siyah bantları kaldırarak 3440×1440 / 21:9 ekrana oturtur."
+  },
+  "description": {
+    "en-US": "UltraWide YouTube makes 16:9 YouTube videos fill your ultrawide display.\n\nIn the default \"Remove side bars\" mode, the video is stretched horizontally to fill the available area only when black side bars actually exist. If the video already fits the screen, nothing is changed. No part of the frame is cropped.\n\nTwo alternative modes are available: \"Crop & fill\" keeps the aspect ratio and crops the top/bottom, and \"Stretch\" always stretches the image.\n\nIt works in fullscreen automatically and optionally in theater mode. Settings are applied instantly, and there is a keyboard shortcut (Alt+Shift+U) to toggle it.\n\nThe extension makes no network requests and collects no data.",
+    "tr": "UltraWide YouTube, 16:9 YouTube videolarının ultra geniş ekranınızı doldurmasını sağlar.\n\nVarsayılan \"Yan bantları kaldır\" modunda, yalnızca gerçekten yan siyah bant varsa video yatay olarak esnetilerek alan doldurulur. Video zaten ekrana sığıyorsa hiçbir şey değiştirilmez. Görüntünün hiçbir kısmı kırpılmaz.\n\nİki alternatif mod vardır: \"Kırp & doldur\" oranı koruyup üst/alt kısmı kırpar, \"Uzat\" ise görüntüyü her zaman esnetir.\n\nTam ekranda otomatik çalışır, isteğe bağlı olarak sinema modunda da uygulanır. Ayarlar anında uygulanır ve Alt+Shift+U kısayoluyla açılıp kapatılabilir.\n\nEklenti hiçbir ağ isteği yapmaz ve hiçbir veri toplamaz."
+  },
+  "categories": {
+    "firefox": ["appearance", "photos-music-videos"],
+    "android": ["appearance", "photos-music-videos"]
+  },
+  "homepage": {
+    "en-US": "https://github.com/nixoslinuxb/ultrawide-youtube",
+    "tr": "https://github.com/nixoslinuxb/ultrawide-youtube"
+  },
+  "support_url": {
+    "en-US": "https://github.com/nixoslinuxb/ultrawide-youtube/issues",
+    "tr": "https://github.com/nixoslinuxb/ultrawide-youtube/issues"
+  },
+  "is_experimental": false,
+  "requires_payment": false,
+  "version": {
+    "license": "MIT",
+    "release_notes": {
+      "en-US": "Initial public release. Removes black side bars without cropping; adds a mode selector and keyboard shortcut.",
+      "tr": "İlk herkese açık sürüm. Kırpmadan yan siyah bantları kaldırır; mod seçici ve klavye kısayolu ekler."
+    }
+  }
+}
